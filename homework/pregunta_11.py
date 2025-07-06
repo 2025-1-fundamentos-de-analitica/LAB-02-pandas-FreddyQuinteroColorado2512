@@ -22,3 +22,14 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
+
+    import pandas as pd
+     
+     # Cargar el archivo tbl1.tsv
+    tbl1 = pd.read_csv('files/input/tbl1.tsv', sep='\t')
+     
+     # Agrupar por 'c0' y unir los valores de 'c4' separados por ','
+    result = tbl1.groupby('c0')['c4'].apply(lambda x: ','.join(map(str, sorted(x))))
+    
+    print(result)
+    return result.to_frame().reset_index()  # convertir a DataFrame y restablecer el índice para que coincida con el formato esperado

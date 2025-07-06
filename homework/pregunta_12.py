@@ -22,3 +22,15 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+
+    import pandas as pd
+
+# Cargar el archivo tbl2.tsv
+    tbl2 = pd.read_csv('files/input/tbl2.tsv', sep='\t')
+
+# Agrupar por 'c0' y unir los valores de 'c5a' y 'c5b' separados por ':'
+    tbl2['c5'] = tbl2.apply(lambda row: f"{row['c5a']}:{row['c5b']}", axis=1)
+    result = tbl2.groupby('c0')['c5'].apply(lambda x: ','.join(sorted(x)))
+
+    return result.to_frame().reset_index()  # convertir a DataFrame y restablecer el índice
+# convertir a DataFrame y restablecer el índice para que coincida con el formato esperado
